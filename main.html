@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI盯盘</title>
+<style>
+    *{box-sizing:border-box;}
+    body{background:#121212;color:#e0e0e0;font-family:system-ui;padding:15px;margin:0;}
+    .title{font-size:18px;margin-bottom:15px;}
+    .stock{background:#1a1a2e;border-radius:12px;padding:14px;margin-bottom:10px;}
+    .name{font-size:16px;font-weight:bold;margin-bottom:6px;}
+    .line{display:flex;justify-content:space-between;margin-bottom:4px;font-size:14px;}
+    .green{color:#00ff99;}
+    .red{color:#ff4444;}
+    .yellow{color:#ffcc00;}
+</style>
+</head>
+<body>
+
+<div class="title">AI 超短线盯盘 · 已登录</div>
+
+<div id="list">
+    <div class="stock">
+        <div class="name">正在加载股票数据...</div>
+    </div>
+</div>
+
+<script>
+// 模拟股票列表（后续可对接真实接口）
+const stocks = [
+    { name:"平安银行", code:"000001", price:12.35, action:"庄家吸筹", type:"超短线", pos:"重仓 70%", stop:11.72, take:13.15, color:"green" },
+    { name:"贵州茅台", code:"600519", price:1186, action:"游资拉升", type:"持股", pos:"中仓 40%", stop:1126, take:1268, color:"green" },
+    { name:"中国平安", code:"601318", price:42.15, action:"洗盘", type:"观望", pos:"轻仓 20%", stop:39.95, take:45.05, color:"yellow" },
+    { name:"宁德时代", code:"300750", price:173, action:"无主力", type:"观望", pos:"0%", stop:164, take:185, color:"" },
+    { name:"隆基绿能", code:"601012", price:26.78, action:"庄家出货", type:"减仓", pos:"0%", stop:25.40, take:28.50, color:"red" }
+];
+
+function show() {
+    let html = "";
+    for (let s of stocks) {
+        html += `
+        <div class="stock">
+            <div class="name">${s.name} (${s.code})</div>
+            <div class="line">
+                <span>现价：${s.price} 元</span>
+                <span class="${s.color}">${s.action}</span>
+            </div>
+            <div class="line">
+                <span>操作：${s.type}</span>
+                <span>${s.pos}</span>
+            </div>
+            <div class="line">
+                <span>止损：${s.stop}</span>
+                <span>止盈：${s.take}</span>
+            </div>
+        </div>`;
+    }
+    document.getElementById("list").innerHTML = html;
+}
+
+window.onload = show;
+</script>
+</body>
+</html>
